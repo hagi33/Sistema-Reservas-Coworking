@@ -1,3 +1,55 @@
 spring:
   application:
-    name: reservation
+    name: coworking-reservation
+
+
+    datasource:
+      url: jbdc:postgresql://localhost:5432/coworking_db
+      username: admin
+      password: admin
+      hikari:
+        maximum-pool-size: 10
+        minimum-idle: 2
+
+    jpa:
+      hibernate:
+        ddl-auto: validate
+        open-in-view: false
+        properties:
+          hibernate:
+            format_sql: true
+        show-sql: false
+
+    flyway:
+      enabled: true
+      locations: classpath:db/migration
+      baseline-on-migrate: true
+
+
+    rabbitmq:
+      host: localhost
+      port: 5672
+      username: coworking
+      password: coworking_secret
+
+    jackson:
+      serialization:
+        write-dates-as-timestamps: false
+      default-property-inclusion: non_null
+
+    jwt:
+      secret: CLAVE_SECRETA
+      expiration: 86400000
+
+    server:
+      port: 8080
+      servlet:
+        context-path: /api
+
+
+    springdoc:
+      api-docs:
+        path: /v3/api-docs
+      swagger-uri:
+        path: /swagger-ui.html
+        operations-sorter: method
